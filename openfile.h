@@ -10,8 +10,6 @@ public:
     OpenFile();
     void open(string filePath, bool type, string addText);
     bool ifFileExists(string filePath);
-private:
-    //bool fileExists{true};
 };
 
 #endif // OPENFILE_H

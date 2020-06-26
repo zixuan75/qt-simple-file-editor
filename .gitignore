@@ -1,0 +1,7 @@
+project
+.qmake.stash
+Makefile
+mainwindow.o
+openfile.o
+moc_mainwindow.o
+main.o
