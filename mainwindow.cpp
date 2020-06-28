@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
+
+#define ERROR_STYLESHEET "QLabel { color: red }"
 using namespace std;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -62,13 +65,13 @@ void MainWindow::handleButton(bool condition)
         } else {
             cerr<<"Please specify a file (line 63: mainwindow.cpp) \n cerr<<\"Please specify a file (line 63: mainwindow.cpp) \\n \"<<endl;"<<endl;
             text_label->setText("Please specify file");
-            text_label->setStyleSheet("QLabel { color : red; }");
+            text_label->setStyleSheet(ERROR_STYLESHEET);
             isError = true;
         }
     } else {
         cerr<<"Error: text empty (line 69: mainwindow.cpp) \n cerr<<\"Error: text empty (line 69: mainwindow.cpp) \\n \"<<endl;"<<endl;
         text_label->setText("Text is empty");
-        text_label->setStyleSheet("QLabel { color : red; }");
+        text_label->setStyleSheet(ERROR_STYLESHEET);
         isError = true;
     }
     m_input->setText("");

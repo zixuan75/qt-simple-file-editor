@@ -36,13 +36,14 @@ private slots:
     void handleFileInputEdit(const QString &text)
     {
         fileText = text;
-        if (!file.ifFileExists(fileText.toStdString()) && !bigButtonShow){
+        string fileTextToStr = fileText.toStdString();
+        if (!file.ifFileExists(fileTextToStr) && !bigButtonShow){
             m_button1->hide();
             m_button2->hide();
             m_buttonBig->show();
             bigButtonShow = true;
         }
-        if (file.ifFileExists(fileText.toStdString()) && bigButtonShow){
+        if (file.ifFileExists(fileTextToStr) && bigButtonShow){
             bigButtonShow = false;
             m_button1->show();
             m_button2->show();
