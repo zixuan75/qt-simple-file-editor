@@ -3,6 +3,7 @@
 #include <iostream>
 
 #define ERROR_STYLESHEET "QLabel { color: red }"
+#define NORMAL_STYLESHEET "QLabel { color: blue }"
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -16,15 +17,12 @@ MainWindow::MainWindow(QWidget *parent)
     int arr[] = {width, height};
     draw(arr);
 
-    connect(m_input, SIGNAL (textChanged(/* QString */)), this, SLOT(handleTextEdit()));
     //connect(m_fileInput, SIGNAL (textChanged(QString)), this, SLOT(handleFileInputEdit(QString)));
-    connect(m_button1, SIGNAL (pressed()), this, SLOT (handleButton1()));
-    connect(m_button2, SIGNAL (pressed()), this, SLOT (handleButton2()));
-    connect(m_buttonBig, SIGNAL (pressed()), this, SLOT (handleButton2()));
 }
 void MainWindow::draw(int arr[]){
     int width = arr[0];
     int height = arr[1];
+    // Draw buttons
     m_button1 = new QPushButton("Append to text", this);
     m_button2 = new QPushButton("Replace with text", this);
     m_buttonBig = new QPushButton("Add text", this);
@@ -35,11 +33,14 @@ void MainWindow::draw(int arr[]){
     m_buttonBig->setGeometry(QRect(QPoint(width/2 - 175, height/2 - 47.5),
                                    QSize(145, 70)));
     m_buttonBig->hide();
+    // Labels
     text_label = new QLabel(this);
     text_label->setText("");
     text_label->setAlignment(Qt::AlignBottom | Qt::AlignRight);
+    text_label->setStyleSheet(NORMAL_STYLESHEET);
     text_label->setGeometry(QRect(QPoint(width/2 + 150, height/2 - 12.5), QSize(200, 200)));
     text_label->setWordWrap(true);
+    // Inputs
     m_input = new QTextEdit(this);
     m_input->setPlaceholderText("Type here");
     m_input->setFocus();
@@ -48,7 +49,12 @@ void MainWindow::draw(int arr[]){
     m_fileInput->setPlaceholderText("File save");
     m_fileInput->setFocus();
     m_fileInput->setGeometry(QRect(QPoint(width/2 - 175, height/2 + 25), QSize(350, 30)));
+    connect(m_input, SIGNAL (textChanged(/* QString */)), this, SLOT(handleTextEdit()));
     connect(m_fileInput, SIGNAL (textChanged(QString)), this, SLOT(handleFileInputEdit(QString)));
+    connect(m_button1, SIGNAL (pressed()), this, SLOT (handleButton1()));
+    connect(m_button2, SIGNAL (pressed()), this, SLOT (handleButton2()));
+    connect(m_buttonBig, SIGNAL (pressed()), this, SLOT (handleButton()));
+
 }
 void MainWindow::handleButton(bool condition)
 {
@@ -57,7 +63,7 @@ void MainWindow::handleButton(bool condition)
         cout<<inputText.toStdString()<<endl;
         text_label->setText(inputText);
         if (isError == true){
-            text_label->setStyleSheet("QLabel { color: black; }");
+            text_label->setStyleSheet(NORMAL_STYLESHEET);
         }
         if (!fileText.isEmpty()){
             //file.open("/home/zixuan/qtProjects/project/exampleFile.txt", inputText.toStdString());

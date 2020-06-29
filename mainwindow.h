@@ -19,7 +19,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void handleButton(bool condition);
+    void handleButton(bool condition=false);
     void handleButton1()
     {
         handleButton(false);
