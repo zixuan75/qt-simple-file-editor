@@ -9,6 +9,7 @@ class OpenFile
 public:
     OpenFile();
     void open(string filePath, bool type, string addText);
+    string read(string filePath);
     bool ifFileExists(string filePath)
     {
         ifstream iFile(filePath);

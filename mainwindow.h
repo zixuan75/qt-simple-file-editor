@@ -37,17 +37,24 @@ private slots:
     {
         fileText = text;
         string fileTextToStr = fileText.toStdString();
-        if (!file.ifFileExists(fileTextToStr) && !bigButtonShow){
-            m_button1->hide();
-            m_button2->hide();
-            m_buttonBig->show();
-            bigButtonShow = true;
+        //cout<<"tex:"<<file.read(fileTextToStr)<<endl;
+        if (!file.ifFileExists(fileTextToStr) ){
+            m_text->setText("");
+            if (!bigButtonShow){
+                m_button1->hide();
+                m_button2->hide();
+                m_buttonBig->show();
+                bigButtonShow = true;
+            }
         }
-        if (file.ifFileExists(fileTextToStr) && bigButtonShow){
-            bigButtonShow = false;
-            m_button1->show();
-            m_button2->show();
-            m_buttonBig->hide();
+        if (file.ifFileExists(fileTextToStr) ){
+            m_text->setText(QString::fromStdString(file.read(fileTextToStr)));
+            if (bigButtonShow){
+                bigButtonShow = false;
+                m_button1->show();
+                m_button2->show();
+                m_buttonBig->hide();
+            }
         }
     }
 private:
@@ -55,8 +62,8 @@ private:
    Ui::MainWindow *ui;
    OpenFile file;
    QString inputText, fileText;
-   QTextEdit *m_input;
+   QTextEdit *m_input, *m_text;
    QPushButton *m_button1, *m_button2, *m_buttonBig;
-   bool isError{false}, bigButtonShow{false};
+   bool isError{false}, bigButtonShow{false}, isWriteDone{false};
 };
 #endif // MAINWINDOW_H

@@ -6,17 +6,24 @@ OpenFile::OpenFile(){}
 void OpenFile::open(string filePath, bool type, string addText)
 {
     ofstream file;
-    bool fileExists = ifFileExists(filePath);
     if (type == false){
         file.open(filePath, ios_base::app);
-        if (fileExists){
-            file << "\n" + addText;
-        } else {
-            file << addText;
-        }
+        file << addText;
     } else {
         file.open(filePath);
         file << addText;
     }
     file.close();
+}
+string OpenFile::read(string filePath)
+{
+    ifstream file(filePath.c_str());
+    string line;
+    string text;
+    while(getline(file, line)){
+        text += line + "\n";
+
+    }
+    //cout<<"Text:"<<text<<endl;
+    return text;
 }

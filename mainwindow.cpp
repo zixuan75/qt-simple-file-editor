@@ -26,11 +26,11 @@ void MainWindow::draw(int arr[]){
     m_button1 = new QPushButton("Append to text", this);
     m_button2 = new QPushButton("Replace with text", this);
     m_buttonBig = new QPushButton("Add text", this);
-    m_button1->setGeometry(QRect(QPoint(width/2 - 175, height/2 - 47.5),
-                                 QSize(145, 30)));
-    m_button2->setGeometry(QRect(QPoint(width/2 - 175, height/2 - 12.5),
-                                 QSize(145, 30)));
-    m_buttonBig->setGeometry(QRect(QPoint(width/2 - 175, height/2 - 47.5),
+    m_button1->setGeometry(QRect(QPoint(width/2 - 175, height/2 - 50),
+                                 QSize(145, 35)));
+    m_button2->setGeometry(QRect(QPoint(width/2 - 175, height/2 - 15),
+                                 QSize(145, 35)));
+    m_buttonBig->setGeometry(QRect(QPoint(width/2 - 175, height/2 - 50),
                                    QSize(145, 70)));
     m_buttonBig->hide();
     // Labels
@@ -48,7 +48,13 @@ void MainWindow::draw(int arr[]){
     QLineEdit *m_fileInput = new QLineEdit(this);
     m_fileInput->setPlaceholderText("File save");
     m_fileInput->setFocus();
-    m_fileInput->setGeometry(QRect(QPoint(width/2 - 175, height/2 + 25), QSize(350, 30)));
+    m_fileInput->setGeometry(QRect(QPoint(width/2 - 175, height/2 + 25), QSize(295, 30)));
+
+    // Before and after
+    m_text = new QTextEdit(this);
+    m_text->setFocus();
+    m_text->setGeometry(QRect(QPoint(width/2 - 175, height - 225), QSize(295, 225)));
+    m_text->setReadOnly(true);
     connect(m_input, SIGNAL (textChanged(/* QString */)), this, SLOT(handleTextEdit()));
     connect(m_fileInput, SIGNAL (textChanged(QString)), this, SLOT(handleFileInputEdit(QString)));
     connect(m_button1, SIGNAL (pressed()), this, SLOT (handleButton1()));
@@ -58,7 +64,6 @@ void MainWindow::draw(int arr[]){
 }
 void MainWindow::handleButton(bool condition)
 {
-
     if(!inputText.isEmpty()){
         cout<<inputText.toStdString()<<endl;
         text_label->setText(inputText);
@@ -66,8 +71,8 @@ void MainWindow::handleButton(bool condition)
             text_label->setStyleSheet(NORMAL_STYLESHEET);
         }
         if (!fileText.isEmpty()){
-            //file.open("/home/zixuan/qtProjects/project/exampleFile.txt", inputText.toStdString());
             file.open(fileText.toStdString(), condition, inputText.toStdString());
+            m_text->setText(QString::fromStdString(file.read(fileText.toStdString())));
         } else {
             cerr<<"Please specify a file (line 63: mainwindow.cpp) \n cerr<<\"Please specify a file (line 63: mainwindow.cpp) \\n \"<<endl;"<<endl;
             text_label->setText("Please specify file");
