@@ -16,8 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
     int height = this->size().height();
     int arr[] = {width, height};
     draw(arr);
-
-    //connect(m_fileInput, SIGNAL (textChanged(QString)), this, SLOT(handleFileInputEdit(QString)));
 }
 void MainWindow::draw(int arr[]){
     int width = arr[0];
